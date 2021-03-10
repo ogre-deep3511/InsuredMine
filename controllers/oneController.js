@@ -19,8 +19,8 @@ const taskOne = async (req, res, next) => {
 
         // console.log(year + "-" + month + "-" + date);
 
-        let cronString = '*/5 * * * * *';
-        // let cronString = `0 0 0 ${date} ${month} *`;
+        // let cronString = '*/5 * * * * *';
+        let cronString = `0 0 0 ${date} ${month} *`;
         // console.log(cronString);
 
         cron.schedule(cronString, async () => {

@@ -3,7 +3,7 @@ const multer = require('multer');
 const express= require('express');
 const csvtojson = require('csvtojson');
 const Users = require('../models/usersSchema');
-var { workerData, parentPort } = require('worker_threads');
+// var { workerData, parentPort } = require('worker_threads');
 
 console.log('Worker threasd is running');
 

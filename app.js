@@ -1,7 +1,7 @@
-var usage = require('usage');
+const usage = require('usage');
 
-const CHECK_CPU_USAGE_INTERVAL    = 1000;
-const HIGH_CPU_USAGE_LIMIT        = 70; // percentage
+const CHECK_CPU_USAGE_INTERVAL    = 1000 * 10;  // seconds
+const HIGH_CPU_USAGE_LIMIT        = 70;         // percentage
 
 require('dotenv').config();
 const fileupload = require('express-fileupload');
@@ -43,31 +43,29 @@ app.use('/api', PolicyCarriers);
 app.use('/api', PolicyInformations);
 app.use('/api', SearchPolicy);
 app.use('/api', UserPolicy);
-app.use('/api', TaskOne)
+app.use('/api', TaskOne) 
 
 app.listen(port, () => {
+    
     console.log(`Server started on port: ${port}`);
-    autoRestart();
-})
 
-autoRestart = setInterval(function()
-{
-    usage.lookup(process.pid, function(err, result) 
+    setInterval(function()
     {
-        if(!err)
+        usage.lookup(process.pid, function(err, result) 
         {
-            if(result.cpu > HIGH_CPU_USAGE_LIMIT)
+            if(!err)
             {
-                // log
-                console.log('restart due to high cpu usage');
+                if(result.cpu > HIGH_CPU_USAGE_LIMIT)
+                {
+                    // log
+                    console.log('restart due to high cpu usage');
 
-                // restart because forever will respawn your process
-                process.exit();
+                    // restart because forever will respawn your process
+                    process.exit();
+                }
             }
-        }
-    });
-}, CHECK_CPU_USAGE_INTERVAL);
+        });
+    }, CHECK_CPU_USAGE_INTERVAL);
 
-
-
+})
 
