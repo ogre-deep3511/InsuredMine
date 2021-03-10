@@ -1,7 +1,6 @@
 const PolicyInformations = require('../models/policyInformationsSchema');
 
 const userPolicy = (req, res, next) => {
-    const name = req.body.name;
     PolicyInformations.aggregate([
         {
             $project: 
